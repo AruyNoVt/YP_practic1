@@ -27,7 +27,8 @@ public class Main{
 
 class Calculate{
     public static void calculator(Scanner scanner, int numberPeople){
-        StringBuilder products = new StringBuilder(); //пробовал динамический список, пробовал массив, но не получалось дальше, нашел стрингбилдер, правильно ли вообще его использовать?
+        //пробовал динамический список, пробовал массив, но не получалось дальше, нашел стрингбилдер, правильно ли вообще его использовать?
+        StringBuilder products = new StringBuilder();
         StringBuilder priceProduct = new StringBuilder();
         double totalSum = 0.0;
         String input = ""; //переменная для запроса ввода
