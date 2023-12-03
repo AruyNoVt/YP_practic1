@@ -36,7 +36,7 @@ class Calculate{
             System.out.println("Введите название товара (или 'завершить' для завершения): ");
             input = scanner.nextLine(); //запрос на ввод товаров
 
-            if(!input.trim().toLowerCase().equals("завершить")){
+            if(!input.equalsIgnoreCase("завершить")){
                 products.append(input).append("\n");
                 boolean validPrice = false;
                 while (!validPrice) {
