@@ -36,18 +36,18 @@ class Calculate{
             System.out.println("Введите название товара (или 'завершить' для завершения): ");
             input = scanner.nextLine(); //запрос на ввод товаров
 
-            if(!input.equalsIgnoreCase("завершить")){
+            if(!input.trim().toLowerCase().equals("завершить")){
                 products.append(input).append("\n");
                 boolean validPrice = false;
                 while (!validPrice) {
-                    System.out.print("Введите стоимость товара с копейками (например, 10.45 или 11.40) : ");
+                    System.out.println("Введите стоимость товара с копейками (например, 10.45 или 11.40) : ");
                     String priceInput = scanner.nextLine();
                     try {
                         double productPrice = Double.parseDouble(priceInput);
                         if (productPrice > 0) {
                             totalSum += productPrice; //добавляем стоимость товара к общей сумме
                             priceProduct.append(priceInput).append("\n"); //добавляем стоимость товара в список
-                            System.out.println("Товар успешно добавлен!\n");
+                            System.out.println("Товар успешно добавлен!");
                             validPrice = true;
                         } else {
                             System.out.println("Некорректное значение! Стоимость должна быть больше 0.");
@@ -60,14 +60,19 @@ class Calculate{
         }
         //выводим список добавленных товаров и их стоимость
         Formatter.formatPriceProduct(products.toString().split("\n"), priceProduct.toString().split("\n"));
-        System.out.println("Общая сумма товаров: " + totalSum + Formatter.format(totalSum)); //выводим общую сумму товаров
 
-        Formatter.format(totalSum, numberPeople); //рассчитываем и выводим сумму для каждого человека
+        //выводим общую сумму товаров
+        System.out.printf("Общая сумма товаров: %.2f%s:\n", totalSum, Formatter.formatCurrency(totalSum));
+
+        double forOnePerson = totalSum / numberPeople;
+        //выводим сумму для каждого человека с учетом падежа слова "рубль"
+        System.out.printf("Каждый должен заплатить: %.2f%s", forOnePerson, Formatter.formatCurrency(forOnePerson));
+
     }
 }
 
 class Formatter{
-    public static String format(double amount) { //функция определения падежа
+    public static String formatCurrency(double amount) { //функция определения падежа
         int lastNumber = (int) amount;
         String currency;
         if (lastNumber == 1) {
@@ -83,15 +88,7 @@ class Formatter{
     public static void formatPriceProduct(String[] productsList, String[] priceProductsList) { //функция вывода стоимости каждого товара с валютой
         System.out.println("Добавленные товары:");
         for (int i = 0; i < productsList.length; i++) {
-            System.out.println(productsList[i] + " - " + priceProductsList[i] + format(Double.parseDouble(priceProductsList[i])));
+            System.out.println(productsList[i] + " - " + priceProductsList[i] + formatCurrency(Double.parseDouble(priceProductsList[i])));
         }
-    }
-
-    public static void format(double totalSum, int numberPeople){
-
-        double forOnePerson = totalSum / numberPeople;
-
-        // Выводим сумму для каждого человека с учетом падежа слова "рубль"
-        System.out.printf("Каждый должен заплатить: %.2f%s\n", forOnePerson, format(forOnePerson));
     }
 }
